@@ -1,14 +1,29 @@
 <#
 .SYNOPSIS
 Installs basic software for .NET developer
-.PARAMETER IncludePaid
-Install paied software that requires specifying license afterwards
+.PARAMETER Packages
+Comma separated list of chocolatey packages to install. If no value will install default set of applications
+.PARAMETER SuspendServices
+Comma separated list of windows services to disable on start. Wildcard are supported
 .Example
- .\InstallDefaults.ps1 -IncludePaid
+ .\InstallDefaults.ps1 -Packages "googlechrome,vscode" -SuspendServices "*SQL*"
 #>
 [CmdletBinding()]
 param (
-    [switch]$IncludePaid
+	[string]$SuspendServices = "*SQL*",
+	[string]$Packages = @("googlechrome",
+						"vscode",
+						"notepadplusplus",
+						"sourcetree",
+						"git.install",
+						"conemu",
+						"7zip",
+						"docker-desktop",
+						"visualstudio2019community",
+						"dotpeek",
+						"sql-server-express",
+						"sql-server-management-studio",
+						"thunderbird") -join ","
 )
 
 function Install-Chocolatey
@@ -17,7 +32,7 @@ function Install-Chocolatey
 	iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
-function Disable-Service
+function Suspend-Service
 {
 	[CmdletBinding()]
 	Param(
@@ -31,27 +46,10 @@ function Disable-Service
 	% { Set-Service -Name $_.Name -StartupType "Manual"; }
 }
 
-Write-Output "Installing $(If ($IncludePaid.IsPresent) {"with"} Else {"without"}) paied software"
 $stopwatch =  [system.diagnostics.stopwatch]::StartNew()
 Install-Chocolatey
-choco install -y googlechrome
-choco install -y vscode
-choco install -y notepadplusplus
-choco install -y sourcetree
-choco install -y git.install
-choco install -y conemu
-choco install -y 7zip
-choco install -y docker-desktop
-choco install -y visualstudio2019community
-choco install -y dotpeek
-choco install -y sql-server-express #"Server=.\SQLEXPRESS;Trusted_Connection=True;
-choco install -y sql-server-management-studio
-Disable-Service "*SQL*"
-choco install -y thunderbird
 
-if ($IncludePaid.IsPresent){
-	choco install -y resharper
-	choco install -y webstorm
-}
+$Packages -split "," | % { choco install -y $_ }
+$SuspendServices -split "," | % { Suspend-Service $_ }
 
 Write-Output "Installion completed in $([math]::Round($stopwatch.Elapsed.TotalMinutes,0)) minutes"
