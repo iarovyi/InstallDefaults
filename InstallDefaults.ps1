@@ -50,6 +50,9 @@ $stopwatch =  [system.diagnostics.stopwatch]::StartNew()
 Install-Chocolatey
 
 $Packages -split "," | % { choco install -y $_ }
-$SuspendServices -split "," | % { Suspend-Service $_ }
+if ($SuspendServices) {
+	$SuspendServices -split "," | % { Suspend-Service $_ }
+}
+
 
 Write-Output "Installion completed in $([math]::Round($stopwatch.Elapsed.TotalMinutes,0)) minutes"
