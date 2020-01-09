@@ -56,6 +56,10 @@ if ($Task -ieq "create"){
     $image = "mcr.microsoft.com/mssql/server:$SqlVersion-latest"
     docker create -v $versionFolder --name $dataContainer $image /bin/true
     docker run -e 'ACCEPT_EULA=Y' -e "SA_PASSWORD=$Password" -p "$($Port):1433" --volumes-from $dataContainer -d --name $serverContainer $image
+    if ($LastExitCode -eq 0) {
+        Write-Host "SQL Server started. Connection string:" -f 'black' -b 'gre'
+        Write-Host "Server=.,$Port;User Id=sa;Password=$Password;" -f 'black' -b 'gre'
+    }
 }
 
 if ($Task -ieq "start"){
