@@ -23,7 +23,8 @@ param (
 						"dotpeek",
 						"sql-server-express",
 						"sql-server-management-studio",
-						"thunderbird") -join ","
+						"thunderbird",
+						"greenshot") -join ","
 )
 
 function Install-Chocolatey
