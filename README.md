@@ -1,34 +1,60 @@
 # InstallDefaults
 
-Don't waste your time for installing all applications manually once you got new pc. Just use simple to use script that will do everything for you. Script install all base applications neede for .NET developer:
-- chrome
-- visual studio code
-- visual studio 2019
-- dotpeek
-- git and source tree
-- docker
-- sql server express (windows service suspended)
-- webstorm
-- thunderbird email client
-- conemu
-- 7zip
-- notepad++
+Minimal, idempotent PowerShell setup script for a new Windows PC.
 
-Install by simple executing script in powershell:
-```
+Default package source is Winget.
+
+## What it installs by default
+
+- Microsoft.VisualStudioCode
+- Notion.Notion
+- Google.Chrome
+- Git.Git
+- Atlassian.Sourcetree
+- Microsoft.VisualStudio.Professional (or Community/Enterprise via parameter)
+- 7zip.7zip
+- GitHub.Copilot
+- Google.GoogleDrive
+- OpenJS.NodeJS.LTS
+- Python.Python.3.14
+- Microsoft.PowerToys
+- Microsoft.WSL
+- Docker.DockerDesktop
+- Docker.sbx
+
+## Behavior
+
+- Idempotent: already installed packages are skipped.
+- Failed or missing packages are retried on next run.
+- Prints summary table with package id, status, details, and install time per package.
+
+## Usage
+
+Run default installation:
+
+```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))
 ```
 
-or install custom list of packages and suspend certain windows services:
-```
-$packages = "googlechrome,vscode,notepadplusplus,sourcetree,git.install,conemu,7zip,docker-desktop,visualstudio2019community,dotpeek,sql-server-express,sql-server-management-studio,thunderbird";
-$suspendServices = "*SQL*"
+Select Visual Studio edition for default list:
+
+```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force;
-& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -Packages $packages -SuspendServices $suspendServices
+& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -VisualStudioEdition Community
 ```
 
-All packages can be updated at once after a while:
+Override package list with comma-separated Winget ids:
+
+```powershell
+$packages = "Git.Git,Microsoft.VisualStudioCode,Docker.DockerDesktop"
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -Packages $packages
 ```
-choco upgrade all
+
+Verbose ouput:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -Verbose
 ```
