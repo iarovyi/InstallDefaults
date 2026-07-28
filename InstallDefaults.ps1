@@ -18,6 +18,7 @@ $defaultPackageIds = @(
 	'7zip.7zip',
 	'GitHub.Copilot',
 	'OpenAI.Codex',
+	'Anthropic.Claude',
 	'Anthropic.ClaudeCode',
 	'Google.GoogleDrive',
 	'OpenJS.NodeJS.LTS',
@@ -25,7 +26,8 @@ $defaultPackageIds = @(
 	'Microsoft.PowerToys',
 	'Microsoft.WSL',
 	'Docker.DockerDesktop',
-	'Docker.sbx'
+	'Docker.sbx',
+	'GitHub.cli'
 )
 
 $packageOverrides = @{
