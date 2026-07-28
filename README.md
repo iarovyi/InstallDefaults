@@ -12,6 +12,7 @@ Default package source is Winget.
 - Git.Git
 - Atlassian.Sourcetree
 - Microsoft.VisualStudio.Professional (or Community/Enterprise via parameter)
+- Microsoft.NuGet
 - 7zip.7zip
 - GitHub.Copilot
 - Google.GoogleDrive
@@ -28,20 +29,24 @@ Default package source is Winget.
 - Failed or missing packages are retried on next run.
 - Prints summary table with package id, status, details, and install time per package.
 
+## Example Output
+
+![Example Output](docs/example-output.png)
+
 ## Usage
 
 Run default installation:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force;
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1')) -Verbose
 ```
 
 Select Visual Studio edition for default list:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force;
-& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -VisualStudioEdition Community
+& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -VisualStudioEdition Community -Verbose
 ```
 
 Override package list with comma-separated Winget ids:
@@ -49,12 +54,5 @@ Override package list with comma-separated Winget ids:
 ```powershell
 $packages = "Git.Git,Microsoft.VisualStudioCode,Docker.DockerDesktop"
 Set-ExecutionPolicy Bypass -Scope Process -Force;
-& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -Packages $packages
-```
-
-Verbose ouput:
-
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force;
-& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -Verbose
+& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/iarovyi/InstallDefaults/master/InstallDefaults.ps1'))) -Packages $packages -Verbose
 ```

@@ -14,6 +14,7 @@ $defaultPackageIds = @(
 	'Git.Git',
 	'Atlassian.Sourcetree',
 	"Microsoft.VisualStudio.$VisualStudioEdition",
+	'Microsoft.NuGet',
 	'7zip.7zip',
 	'GitHub.Copilot',
 	'Google.GoogleDrive',
