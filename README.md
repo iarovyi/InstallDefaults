@@ -15,6 +15,8 @@ Default package source is Winget.
 - Microsoft.NuGet
 - 7zip.7zip
 - GitHub.Copilot
+- OpenAI.Codex
+- Anthropic.ClaudeCode
 - Google.GoogleDrive
 - OpenJS.NodeJS.LTS
 - Python.Python.3.14
