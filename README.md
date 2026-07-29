@@ -26,6 +26,7 @@ Default package source is Winget.
 - Docker.DockerDesktop
 - Docker.sbx
 - GitHub.cli
+- SlackTechnologies.Slack
 
 ## Behavior
 

@@ -27,7 +27,8 @@ $defaultPackageIds = @(
 	'Microsoft.WSL',
 	'Docker.DockerDesktop',
 	'Docker.sbx',
-	'GitHub.cli'
+	'GitHub.cli',
+	'SlackTechnologies.Slack'
 )
 
 $packageOverrides = @{
